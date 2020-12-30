@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+html {
+  min-height: 100%;
+  width: 100%;
+}
+body {
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  flex-direction: column;
+  background: cornflowerblue;
+}
+.control_panel {
+  background: cornsilk;
+  max-width: 800px;
+  width: 90%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 1rem;
+  border-radius: 5px;
+}
+.dropdown {
+  width: 100%;
+  height: 30px;
+}
+.dropdown select{
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+}
+
+#led_matrix {
+  width: 100%;
+  height: 50%;
+  background: rgb(184, 191, 253);
+  display: flex;
+  flex-direction: column;
+}
+.led_matrix_row{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.led_matrix_cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  height: 100%;
+}
+.led_matrix_button {
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  background-color: white;
+}
+/* .led_matrix_button:hover,
+.led_matrix_button:active {
+  background: #e0e0e0;
+} */
+
+#brightness_slider {
+  width: 100%;
+}
+
+
+
+button:focus,
+select:focus {
+ outline: none;
+}
+
+input,
+select,
+button {
+  cursor: pointer;
+}
+
