@@ -38,7 +38,6 @@ const getLedData = () => {
     .then((data) => {
       ledsConfig = data;
       showLeds();
-      console.log(data);
     })
     .catch((err) => {
       console.log(err);
@@ -70,7 +69,6 @@ const getBrightnessData = () => {
   fetch('https://light-waves-tmr-default-rtdb.firebaseio.com/brightness.json')
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       brigthnessSlider.value = data;
     })
     .catch((err) => {
@@ -103,7 +101,6 @@ const getModeData = () => {
 getModeData();
 
 const putLedData = (val) => {
-  console.log(val);
   ledsConfig[val] = !ledsConfig[val];
   showLeds();
   let data = JSON.stringify(ledsConfig);
@@ -111,9 +108,7 @@ const putLedData = (val) => {
     method: 'PUT',
     body: data,
   })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => {})
     .catch((err) => {
       console.log(err);
     });
@@ -121,15 +116,12 @@ const putLedData = (val) => {
 
 const putColorData = (val) => {
   showLeds();
-  console.log(colorOptions.value);
   let data = JSON.stringify(colorOptions.value);
   fetch('https://light-waves-tmr-default-rtdb.firebaseio.com/color.json', {
     method: 'PUT',
     body: data,
   })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => {})
     .catch((err) => {
       console.log(err);
     });
@@ -137,45 +129,48 @@ const putColorData = (val) => {
 
 const putModeData = (val) => {
   showLeds();
-  console.log(modes.value);
   let data = JSON.stringify(modes.value);
   fetch('https://light-waves-tmr-default-rtdb.firebaseio.com/mode.json', {
     method: 'PUT',
     body: data,
   })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => {})
     .catch((err) => {
       console.log(err);
     });
 };
 
 const putBrightnessData = (val) => {
-  console.log(val);
   let data = JSON.stringify(val);
   fetch('https://light-waves-tmr-default-rtdb.firebaseio.com/brightness.json', {
     method: 'PUT',
     body: data,
   })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => {})
     .catch((err) => {
       console.log(err);
     });
 };
 
 const showLeds = () => {
-  for (led in ledsConfig) {
-    let current = document.querySelector(`#${led}`);
-    if (ledsConfig[led] === true) current.style.background = colorOptions.value;
-    else current.style.background = 'white';
+  let ledMatrix = document.querySelector('#led_matrix');
+  let controlPanel = document.querySelector('.control_panel');
+  if (modeOptions.value === 'Custom') {
+    ledMatrix.style.display = 'flex';
+    controlPanel.style.height = '500px';
+    for (led in ledsConfig) {
+      let current = document.querySelector(`#${led}`);
+      if (ledsConfig[led] === true)
+        current.style.background = colorOptions.value;
+      else current.style.background = 'white';
+    }
+  } else {
+    ledMatrix.style.display = 'none';
+    controlPanel.style.height = '200px';
   }
 };
 
 const handleEvent = (event) => {
-  console.log(event.target.id);
   if (event.target.id === 'colors') putColorData(event.target.value);
   else if (event.target.id === 'modes') putModeData(event.target.value);
   else if (event.target.id === 'brightness_slider')
