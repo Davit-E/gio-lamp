@@ -8,7 +8,22 @@
   </head>
   <body>
     <div class="control_panel">
+      <div class="onOffSwitch">
+        <input type="radio" id="on" name="switch" value="on">
+        <label for="on">On</label>
+        <input type="radio" id="off" name="switch" value="off">
+        <label for="off">Off</label>
+      </div>
       <div class="dropdown">
+        <label for="device">Choose the Device</label>
+        <select name="device" id="device">
+          <option selected disabled hidden></option>
+          <option value="tmrState">Kata</option>
+          <option value="myState">Whp</option>
+        </select>
+      </div>
+      <div class="dropdown">
+        <label for="choose mode">Choose Mode</label>
         <select name="modes" id="modes">
           <option value="LightWave">Light Wave</option>
           <option value="Pulse">Pulse</option>
@@ -17,6 +32,7 @@
         </select>
       </div>
       <div class="dropdown">
+        <label for="choose color">Choose Color</label>
         <select name="colors" id="colors">
           <option value="Red">Red</option>
           <option value="Yellow">Yellow</option>
@@ -116,7 +132,8 @@
         </div>
       </div>
       <input id="brightness_slider" type="range" min="1" max="60" value="20" />
-    </div>
+      <lable for="brightness">Brightness<lable>
+    </>
     <script defer type="text/javascript" src="app.js"></script>
   </body>
 </html>

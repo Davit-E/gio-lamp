@@ -17,14 +17,13 @@ body {
   justify-content: center;
   font-family: 'Montserrat', sans-serif;
   flex-direction: column;
-  background: cornflowerblue;
+  background: LightSeaGreen;
 }
 .control_panel {
-  background: cornsilk;
+  background: beige;
   max-width: 800px;
   width: 90%;
-  /* min-height: 200px; */
-  height: 200px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;

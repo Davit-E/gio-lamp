@@ -1,7 +1,10 @@
 let modeOptions = document.querySelector('#modes');
 let colorOptions = document.querySelector('#colors');
 let brigthnessSlider = document.querySelector('#brightness_slider');
+let device = document.querySelector('#device');
 let leds = Array.from(document.querySelectorAll('.led_matrix_button'));
+let onOffSwitch = document.querySelector('.onOffSwitch');
+let radioButtuns = Array.from(onOffSwitch.children);
 
 let ledsConfig = {
   led_0: false,
@@ -98,7 +101,19 @@ const getModeData = () => {
     });
 };
 
-getModeData();
+const getDeviceType = (val) => {
+  getModeData();
+  fetch(`https://light-waves-tmr-default-rtdb.firebaseio.com/${val}.json`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data) radioButtuns[0].checked = true;
+      else radioButtuns[2].checked = true;
+    })
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const putLedData = (val) => {
   ledsConfig[val] = !ledsConfig[val];
@@ -152,12 +167,32 @@ const putBrightnessData = (val) => {
     });
 };
 
+const putOnOffState = (val) => {
+  if (device.value) {
+    let onOff = '';
+    if (val === 'on') onOff = true;
+    else onOff = false;
+    let data = JSON.stringify(onOff);
+    fetch(
+      `https://light-waves-tmr-default-rtdb.firebaseio.com/${device.value}.json`,
+      {
+        method: 'PUT',
+        body: data,
+      }
+    )
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+};
+
 const showLeds = () => {
   let ledMatrix = document.querySelector('#led_matrix');
   let controlPanel = document.querySelector('.control_panel');
   if (modeOptions.value === 'Custom') {
     ledMatrix.style.display = 'flex';
-    controlPanel.style.height = '500px';
+    controlPanel.style.height = '700px';
     for (led in ledsConfig) {
       let current = document.querySelector(`#${led}`);
       if (ledsConfig[led] === true)
@@ -166,7 +201,7 @@ const showLeds = () => {
     }
   } else {
     ledMatrix.style.display = 'none';
-    controlPanel.style.height = '200px';
+    controlPanel.style.height = '350px';
   }
 };
 
@@ -175,12 +210,17 @@ const handleEvent = (event) => {
   else if (event.target.id === 'modes') putModeData(event.target.value);
   else if (event.target.id === 'brightness_slider')
     putBrightnessData(event.target.value);
+  else if (event.target.id === 'device') getDeviceType(event.target.value);
+  else if (event.target.name === 'switch') putOnOffState(event.target.value);
   else putLedData(event.target.id);
 };
 
+device.addEventListener('change', handleEvent);
 modeOptions.addEventListener('change', handleEvent);
 colorOptions.addEventListener('change', handleEvent);
 brigthnessSlider.addEventListener('change', handleEvent);
+radioButtuns[0].addEventListener('change', handleEvent);
+radioButtuns[2].addEventListener('change', handleEvent);
 leds.forEach((led) => {
   led.addEventListener('click', handleEvent);
 });
